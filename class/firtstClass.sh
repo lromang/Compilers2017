@@ -19,7 +19,8 @@
 if [ -z "$2" ]
 then
     echo "Falta un argumento!"
-    echo "uso: ./firstClass.sh -i/-c string_of_numbers"
+    echo "USO: ./firstClass.sh -i/-c string_of_numbers"
+    exit -1
 fi
 
 # Read in string representing a sum
