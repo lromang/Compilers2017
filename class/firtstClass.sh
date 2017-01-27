@@ -24,15 +24,14 @@ then
 fi
 
 # Read in string representing a sum
-valid=$(echo $2 | grep -Eo '((^[1-9][0-9]*)\+([1-9][0-9]*))+')
+string=$(echo $2 | sed -r 's/ +//g')
+valid=$(echo $string | grep -Eo '(^[1-9][0-9]*)(\+([1-9][0-9]*))+')
 
-if [ "$valid" != "$2" ]
+if [ "$valid" != "$string" ]
 then
     echo 'La cadena no representa una suma de enteros!'
     exit -1
 fi
-
-string=$(echo $2 | sed -r 's/ +//g')
 
 if [ "$1" == "-i" ]
 then
