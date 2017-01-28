@@ -14,7 +14,6 @@ default: $(PRODUCTS)
 
 # Set up the list of source and object files
 SRCS = errors.cc utility.cc main.cc \
-	
 
 # OBJS can deal with either .cc or .c files listed in SRCS
 OBJS = lex.yy.o $(patsubst %.cc, %.o, $(filter %.cc,$(SRCS))) $(patsubst %.c, %.o, $(filter %.c, $(SRCS)))
@@ -45,7 +44,7 @@ LEXFLAGS = -d
 YACCFLAGS = -dvty
 
 # Link with standard c library, math library, and lex library
-LIBS = -lc -lm -ll
+LIBS = -lc -lm -lfl
 
 # Rules for various parts of the target
 
@@ -61,7 +60,7 @@ lex.yy.c: scanner.l
 # rules to build compiler (dcc)
 
 $(COMPILER) : $(PREPROCESSOR) $(OBJS)
-	$(LD) -o $@ $(OBJS) $(LIBS)
+	$(LD) -o $@ $(OBJS) $(LIBS)  ## -L/usr/local/lib
 
 $(COMPILER).purify : $(OBJS)
 	purify -log-file=purify.log -cache-dir=/tmp/$(USER) -leaks-at-exit=no $(LD) -o $@ $(OBJS) $(LIBS)
