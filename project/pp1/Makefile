@@ -60,7 +60,7 @@ lex.yy.c: scanner.l
 # rules to build compiler (dcc)
 
 $(COMPILER) : $(PREPROCESSOR) $(OBJS)
-	$(LD) -o $@ $(OBJS) $(LIBS)  ## -L/usr/local/lib
+	$(LD) -o $@ $(OBJS) $(LIBS)
 
 $(COMPILER).purify : $(OBJS)
 	purify -log-file=purify.log -cache-dir=/tmp/$(USER) -leaks-at-exit=no $(LD) -o $@ $(OBJS) $(LIBS)
