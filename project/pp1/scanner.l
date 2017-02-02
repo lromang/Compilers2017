@@ -91,8 +91,8 @@ static void DoBeforeEachAction();
 
 "([A-Za-z_][A-Za-z_0-9]*)"       {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
 
-"([1-9][0-9]*)"                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
-"(0[xX][1-9A-Fa-f][0-9A-Fa-f]*"  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
+"^([\+-])?(^0$|([1-9][0-9]*))"                   {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
+"^(([\+-])?0[xX])(0$|[1-9A-Fa-f][0-9A-Fa-f]*)"  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 
 %%
 /* The closing %% above marks the end of the Rules section and the beginning
