@@ -85,6 +85,7 @@ static void DoBeforeEachAction();
 "!="             {return T_NotEqual;}
 "&&"             {return T_And;}
 "||"             {return T_Or;}
+"[]"             {return T_Dims;}
 "true"           {return 1;}
 "false"          {return 0;}
 "\n"             {nRow++; nCol = 1;}
@@ -133,4 +134,8 @@ void InitScanner()
  */
 static void DoBeforeEachAction()
 {
+    yylloc.first_line   = nRow;
+    yylloc.first_column = nCol;
+    yylloc.last_column  = nCol + yyleng -1;
+    nCol += yyleng;
 }
