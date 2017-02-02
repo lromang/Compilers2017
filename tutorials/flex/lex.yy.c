@@ -468,7 +468,11 @@ char *yytext;
 int chars = 0;
 int words = 0;
 int lines = 0;
-#line 472 "lex.yy.c"
+
+int totchars = 0;
+int totwords = 0;
+int totlines = 0;
+#line 476 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -686,10 +690,10 @@ YY_DECL
 		}
 
 	{
-#line 8 "wc.l"
+#line 12 "wc.l"
 
 
-#line 693 "lex.yy.c"
+#line 697 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -748,26 +752,26 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "wc.l"
+#line 14 "wc.l"
 {words++; chars+=strlen(yytext);}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 11 "wc.l"
+#line 15 "wc.l"
 {chars++; lines++;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "wc.l"
+#line 16 "wc.l"
 {chars++;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 14 "wc.l"
+#line 18 "wc.l"
 ECHO;
 	YY_BREAK
-#line 771 "lex.yy.c"
+#line 775 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1768,7 +1772,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 14 "wc.l"
+#line 18 "wc.l"
 
 
 
@@ -1776,13 +1780,29 @@ main(argc, argv)
 int argc;
 char** argv;
 {
-    if(argc > 1){
-        if(!(yyin = fopen(argv[1], "r"))){
-            perror(argv[1]);
-            return(1);
-        }
+    int i;
+
+    if(argc < 2){ /*just read stdin*/
+        yylex();
+        printf("%d %d %d\n", lines, words, chars);
+        return 0;
     }
-    yylex();
-    printf("%8d%8d%8d\n", lines, words, chars);
+    for(i = 1; i < argc; i++){
+        FILE *f  = fopen(argv[i], "r");
+        if(!f){
+            perror(argv[i]);
+            return (1);
+        }
+        yyrestart(f);
+        yylex();
+        fclose(f);
+        printf("%d %d %d %s\n", lines, words, chars, argv[i]);
+        totchars += chars; chars = 0;
+        totwords += words; words = 0;
+        totlines += lines; lines = 0;
+    }
+    if(argc > 1) /* print total if more than one file*/
+        printf("%d %d %d total\n", totlines, totwords, totchars);
+    return 0;
 }
 

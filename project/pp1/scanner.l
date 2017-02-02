@@ -79,14 +79,20 @@ static void DoBeforeEachAction();
 "break"          {return T_Break;}
 "New"            {return T_New;}
 "NewArray"       {return T_NewArray;}
-
+"=="             {return T_Equal;}
+"<="             {return T_LessEqual;}
+">="             {return T_GreaterEqual;}
+"!="             {return T_NotEqual;}
+"&&"             {return T_And;}
+"||"             {return T_Or;}
 "true"           {return 1;}
 "false"          {return 0;}
+"\n"             {nRow++; nCol = 1;}
 
-"([A-Za-z_][A-Za-z_0-9]*)" {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1};return T_Identifier;}
+"([A-Za-z_][A-Za-z_0-9]*)"       {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
 
-"([1-9][0-9]*)"  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant};
-"(0[xX][1-9A-Fa-f][0-9A-Fa-f]*"  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant};
+"([1-9][0-9]*)"                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
+"(0[xX][1-9A-Fa-f][0-9A-Fa-f]*"  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 
 %%
 /* The closing %% above marks the end of the Rules section and the beginning

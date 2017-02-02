@@ -25,7 +25,7 @@ char** argv;
 
     if(argc < 2){ /*just read stdin*/
         yylex();
-        printf("%d%d%d\n", lines, words, chars);
+        printf("%d %d %d\n", lines, words, chars);
         return 0;
     }
     for(i = 1; i < argc; i++){
@@ -37,12 +37,12 @@ char** argv;
         yyrestart(f);
         yylex();
         fclose(f);
-        printf("%d%d%d %s\n", lines, words, chars, argv[i]);
+        printf("%d %d %d %s\n", lines, words, chars, argv[i]);
         totchars += chars; chars = 0;
         totwords += words; words = 0;
         totlines += lines; lines = 0;
     }
     if(argc > 1) /* print total if more than one file*/
-        printf("%d%d%d total\n", totlines, totwords, totchars);
+        printf("%d %d %d total\n", totlines, totwords, totchars);
     return 0;
 }
