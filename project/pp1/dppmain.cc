@@ -19,8 +19,23 @@
  */
 int main(int argc, char *argv[])
 {
-  int ch;
+  char ch;
+  char lookAHead;
   while ((ch = getc(stdin)) != EOF)
-    putc(ch, stdout);
+  read1 :
+    if(ch == '/'){
+      lookAHead = getc(stdin);
+      if(lookAHead == '/'){
+        while(getc(stdin) != '\n');
+      }else if(lookAHead == '*'){
+        while((getc(stdin) != '*') &&  (getc(stdin) != '/'));
+        goto read1;
+      }else{
+        putc(ch, stdout);
+        putc(lookAHead, stdout);
+      }
+    }else{
+      putc(ch, stdout);
+    }
   return 0;
 }

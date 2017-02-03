@@ -91,12 +91,14 @@ static void DoBeforeEachAction();
 
 ([A-Za-z_][A-Za-z_0-9]*)                      {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
 
-([\+-])?(^0$|([1-9][0-9]*))                   {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
-([\+-])?0[xX])(0$|[1-9A-Fa-f][0-9A-Fa-f]*)    {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
+([\+-])?(^0$|([1-9][0-9]*))                  {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
+(([\+-])?0[xX])(0$|[1-9A-Fa-f][0-9A-Fa-f]*)  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 
-([\+-])?[0-9]+(\.[0-9]*([Ee]([\+-])?[0-9]+)?) {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
+[0-9]+(\.[0-9]*([Ee]([\+-])?[0-9]+)?)        {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 
-\"[^\"\n]*\"                                  {printf("string");}
+\"[^\"\n]*\"                                 {return T_String;};
+
+\/\/[^\n]                                      {};
 
 %%
 /* The closing %% above marks the end of the Rules section and the beginning
