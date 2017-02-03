@@ -60,47 +60,48 @@ static void DoBeforeEachAction();
  /* All patterns and actions should be placed between the start and stop
   * %% markers which delimit the Rules section. 
   */
-"void"           {return T_Void;}
-"int"            {return T_Int;}
-"double"         {return T_Double;}
-"bool"           {return T_Bool;}
-"string"         {return T_String;}
-"class"          {return T_Class;}
-"interface"      {return T_Interface;}
-"null"           {return T_Null;}
-"this"           {return T_This;}
-"extends"        {return T_Extends;}
-"implements"     {return T_Implements;}
-"for"            {return T_For;}
-"while"          {return T_While;}
-"if"             {return T_If;}
-"else"           {return T_Else;}
-"return"         {return T_Return;}
-"break"          {return T_Break;}
-"New"            {return T_New;}
-"NewArray"       {return T_NewArray;}
-"=="             {return T_Equal;}
-"<="             {return T_LessEqual;}
-">="             {return T_GreaterEqual;}
-"!="             {return T_NotEqual;}
-"&&"             {return T_And;}
-"||"             {return T_Or;}
-"true"           {return 1;}
-"false"          {return 0;}
-"\n"             {nRow++; nCol = 1;}
+"void"           {return T_Void;};
+"int"            {return T_Int;};
+"double"         {return T_Double;};
+"bool"           {return T_Bool;};
+"string"         {return T_String;};
+"class"          {return T_Class;};
+"interface"      {return T_Interface;};
+"null"           {return T_Null;};
+"this"           {return T_This;};
+"extends"        {return T_Extends;};
+"implements"     {return T_Implements;};
+"for"            {return T_For;};
+"while"          {return T_While;};
+"if"             {return T_If;};
+"else"           {return T_Else;};
+"return"         {return T_Return;};
+"break"          {return T_Break;};
+"New"            {return T_New;};
+"NewArray"       {return T_NewArray;};
+"=="             {return T_Equal;};
+"<="             {return T_LessEqual;};
+">="             {return T_GreaterEqual;};
+"!="             {return T_NotEqual;};
+"&&"             {return T_And;};
+"||"             {return T_Or;};
+"true"           {return 1;};
+"false"          {return 0;};
+"\n"             {nRow++; nCol = 1;};
 
-([A-Za-z_][A-Za-z_0-9]*)                            {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
+[-+/*%=.,;!<>()[\]{}]                               {return yytext[0];};
 
-(^0$|(^(([\+-])?[1-9])[0-9]*$))                     {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
-(^0$|(^((([\+-])?0[xX])[1-9A-Fa-f])[0-9A-Fa-f]*$))  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
+[A-Za-z_][A-Za-z_0-9]*                              {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
 
-[0-9]+(\.[0-9]*([Ee]([\+-])?[0-9]+)?)        {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
+(^0$|(([\+-])?[1-9][0-9]*))                         {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
+(^0$|(^((([\+-])?0[xX])[1-9A-Fa-f])[0-9A-Fa-f]*))   {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 
-\"[^\"\n]*\"                                 {return T_String;};
+^[0-9]+(\.[0-9]*([Ee]([(\+|\-)])?[0-9]+)?)          {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 
-\/\/[^\n]                                    {};
+\"[^\"\n]*\"                                        {return T_String;};
 
-" "+                                         {};
+\/\/[^\n]                                           {};
+
 
 %%
 /* The closing %% above marks the end of the Rules section and the beginning
