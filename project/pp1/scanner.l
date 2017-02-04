@@ -13,6 +13,8 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>
+#include <map>
 #include "scanner.h"
 #include "utility.h" // for PrintDebug()
 #include "errors.h"
@@ -46,6 +48,7 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
  */
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
+ std::map<std::string, int> macros;
  int  nRow, nCol, nMacro; //, maxNameLength, maxDescLength, nameLength;
  char** names;
  char** values;
@@ -96,27 +99,12 @@ static void DoBeforeEachAction();
 
 "#define "([A-Z]+.*) {
   int i, k;
-  // Obtener nombre de macro.
+  // Obtener nombre de macro. con split
+  // y usar el map
   // 8 = longitud(#define_)
-  i = 8;
-  k = 1;
-  names[nMacro][0] = '#';
-  while(yytext[i] != ' '){
-    names[nMacro][k] = yytext[i];
-    k++;
-    i++;
-  }
-  i++;
-  k = 1;
+  // char * name = (yytext);
+  // macros.insert(std::make_pair(names[k]));
   // Obtener valor de macro.
-  values[nMacro][0] = '#';
-  while(yytext[i] != '\n'){
-    values[nMacro][k] = yytext[i];
-    k++;
-    i++;
-  }
-  // Incrementar número de macros.
-  nMacro++;
   return 0;
 };
 
