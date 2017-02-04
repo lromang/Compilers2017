@@ -1262,8 +1262,8 @@ YY_RULE_SETUP
   // Obtener nombre de macro.
   std::string def       = yytext;
   std::string delimiter = "#";
-  std::string name      = def.substr(0, def.find(delimiter));
-  // printf("%s\n", macros[name]);
+  std::string name      = def.substr(1, def.find(delimiter));
+  printf("%s\n", macros[name]);
   return 0;//macros[name];
 }
 	YY_BREAK
