@@ -1213,12 +1213,12 @@ YY_RULE_SETUP
 case 26:
 YY_RULE_SETUP
 #line 91 "scanner.l"
-{return 1;};
+{yylval.boolConstant = 1; return T_BoolConstant;};
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 92 "scanner.l"
-{return 0;};
+{yylval.boolConstant = 0; return T_BoolConstant;};
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
