@@ -122,8 +122,8 @@ static void DoBeforeEachAction();
 
 ([-+/*%=.,;!<>()[\]{}])                     {return yytext[0];};
 
-(([\-])?[0-9]+)                             {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
-(([\-])?0[xX][0-9A-Fa-f]+)                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
+([0-9]+)                             {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
+(0[xX][0-9A-Fa-f]+)                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 
 ([0-9]+(\.[0-9]*([Ee]([(\+|\-)])?[0-9]+)?))  {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 
