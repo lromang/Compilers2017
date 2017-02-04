@@ -116,7 +116,8 @@ static void DoBeforeEachAction();
   std::string def       = yytext;
   std::string delimiter = "#";
   std::string name      = def.substr(1, def.find(delimiter));
-  printf("%s\n", macros[name]);
+  // printf("%s\n", macros[name]);
+  std::copy(macros[name].begin(), macros[name].end(), yytext);
   return 0;//macros[name];
 }
 

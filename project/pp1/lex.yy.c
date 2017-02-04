@@ -645,7 +645,7 @@ static yyconst flex_int16_t yy_rule_linenum[41] =
        67,   68,   69,   70,   71,   72,   73,   74,   75,   76,
        77,   78,   79,   80,   81,   82,   83,   84,   85,   86,
        87,   88,   89,   90,   91,   92,   93,   94,   95,   96,
-       98,  114,  123,  125,  126,  128,  130,  138,  140,  142
+       98,  114,  124,  126,  127,  129,  131,  139,  141,  143
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1263,33 +1263,34 @@ YY_RULE_SETUP
   std::string def       = yytext;
   std::string delimiter = "#";
   std::string name      = def.substr(1, def.find(delimiter));
-  printf("%s\n", macros[name]);
+  // printf("%s\n", macros[name]);
+  std::copy(macros[name].begin(), macros[name].end(), yytext);
   return 0;//macros[name];
 }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 123 "scanner.l"
+#line 124 "scanner.l"
 {return yytext[0];};
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 125 "scanner.l"
+#line 126 "scanner.l"
 {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 126 "scanner.l"
+#line 127 "scanner.l"
 {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 128 "scanner.l"
+#line 129 "scanner.l"
 {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 130 "scanner.l"
+#line 131 "scanner.l"
 {
 if(strlen(yytext) > 31){
 ReportError::LongIdentifier(&yylloc, yytext);
@@ -1300,25 +1301,25 @@ return T_Identifier;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 138 "scanner.l"
+#line 139 "scanner.l"
 {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 140 "scanner.l"
+#line 141 "scanner.l"
 { ReportError::UntermString(&yylloc, yytext); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 142 "scanner.l"
+#line 143 "scanner.l"
 {ReportError::UnrecogChar(&yylloc, yytext[0]); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 144 "scanner.l"
+#line 145 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1322 "lex.yy.c"
+#line 1323 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2465,7 +2466,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 144 "scanner.l"
+#line 145 "scanner.l"
 
 
 /* The closing %% above marks the end of the Rules section and the beginning
