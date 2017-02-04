@@ -125,6 +125,7 @@ static void DoBeforeEachAction();
   for(i = 0; (i < nMacro) && (strcmp(yytext, names[i]) != 0) ; i++);
   if(i == nMacro) ReportError::UnrecogChar(&yylloc, yytext[0]);
   // Imprimir resultados.
+  while(i < )
   return 0;
 }
 
