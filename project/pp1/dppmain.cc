@@ -5,6 +5,8 @@
  */
  
 #include "scanner.h"
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 /* Function: main()
@@ -21,7 +23,13 @@ int main(int argc, char *argv[])
 {
   char ch;
   char lookAHead;
-  while ((ch = getc(stdin)) != EOF)
+  /*char string[512];
+  scanf("%s", string);
+  if(strcmp(string,"#define") == 0){
+    printf("SUCCCESSS!!!");
+  }
+  */
+  while ((ch = getc(stdin)) != EOF){
   read1 :
     if(ch == '/'){
       lookAHead = getc(stdin);
@@ -37,5 +45,8 @@ int main(int argc, char *argv[])
     }else{
       putc(ch, stdout);
     }
+  }
   return 0;
 }
+
+  
