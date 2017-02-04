@@ -12,6 +12,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include "scanner.h"
 #include "utility.h" // for PrintDebug()
 #include "errors.h"
@@ -45,7 +46,7 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
  */
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
- int  nRow, nCol, nMacros, maxNameLength, maxDescLength, nameLength;
+ int  nRow, nCol, nMacro; //, maxNameLength, maxDescLength, nameLength;
  char** names;
  char** values;
 %}
@@ -93,7 +94,22 @@ static void DoBeforeEachAction();
 [\t]             {nCol += 8;};
 [ \t\n]          {};
 
-"#define "([A-Z])                            {int i; nMacros++; i = 8; while(yytext[i] != ' '){nameLength++; i++;}; if(nameLength > maxNameLength)maxNameLength = nameLength; printf("%d\n", nameLength); return 0;};
+"#define "([A-Z]) {
+  // Longitude de #define_
+  int i = 8;
+  nMacro++;
+  // Obtener nombre de macro.
+  while(yytext[i] != ' '){
+    names[nMacro][i]  = yytext[i];
+    i++;
+  }
+  i++;
+  // Obtener valor de macro.
+  while(yytext[i] != '\n'){
+    values[nMacro][i] = yytext[i];
+  }
+  return 0;
+};
 
 ([-+/*%=.,;!<>()[\]{}])                      {return yytext[0];};
 
@@ -133,8 +149,15 @@ void InitScanner()
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
     nRow = nCol = 1;
-    maxDescLength = maxNameLength = -1;
-    nMacros = nameLength = 0;
+    nMacro = 0;
+    /* Inicializar arreglos */
+    names  = (char**) malloc(200 * 30 * sizeof(char));
+    values = (char**) malloc(200 * 200 * sizeof(char));
+
+    // Posibles opciones para evitar
+    // Inicializar los arreglos demasiado grandes.
+    // maxDescLength = maxNameLength = -1;
+
 }
 
 

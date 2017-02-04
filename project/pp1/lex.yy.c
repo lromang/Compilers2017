@@ -640,10 +640,10 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[39] =
     {   0,
-       65,   66,   67,   68,   69,   70,   71,   72,   73,   74,
-       75,   76,   77,   78,   79,   80,   81,   82,   83,   84,
-       85,   86,   87,   88,   89,   90,   91,   92,   93,   94,
-       96,   98,  100,  101,  103,  105,  107,  109
+       66,   67,   68,   69,   70,   71,   72,   73,   74,   75,
+       76,   77,   78,   79,   80,   81,   82,   83,   84,   85,
+       86,   87,   88,   89,   90,   91,   92,   93,   94,   95,
+       97,  114,  116,  117,  119,  121,  123,  125
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -668,6 +668,7 @@ char *yytext;
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include "scanner.h"
 #include "utility.h" // for PrintDebug()
 #include "errors.h"
@@ -701,7 +702,7 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
  */
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
- int  nRow, nCol, nMacros, maxNameLength, maxDescLength, nameLength;
+ int  nRow, nCol, nMacro; //, maxNameLength, maxDescLength, nameLength;
  char** names;
  char** values;
 /* The section before the first %% is the Definitions section of the lex
@@ -710,7 +711,7 @@ static void DoBeforeEachAction();
 * as a simple substitution mechanism that allows for more readable
 * entries in the Rules section later. 
 */
-#line 714 "lex.yy.c"
+#line 715 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -995,12 +996,12 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 61 "scanner.l"
+#line 62 "scanner.l"
 
  /* All patterns and actions should be placed between the start and stop
   * %% markers which delimit the Rules section. 
   */
-#line 1004 "lex.yy.c"
+#line 1005 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1082,202 +1083,217 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 65 "scanner.l"
+#line 66 "scanner.l"
 {return T_Void;};
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 66 "scanner.l"
+#line 67 "scanner.l"
 {return T_Int;};
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 67 "scanner.l"
+#line 68 "scanner.l"
 {return T_Double;};
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 68 "scanner.l"
+#line 69 "scanner.l"
 {return T_Bool;};
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 69 "scanner.l"
+#line 70 "scanner.l"
 {return T_String;};
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 70 "scanner.l"
+#line 71 "scanner.l"
 {return T_Class;};
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 71 "scanner.l"
+#line 72 "scanner.l"
 {return T_Interface;};
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 72 "scanner.l"
+#line 73 "scanner.l"
 {return T_Null;};
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 73 "scanner.l"
+#line 74 "scanner.l"
 {return T_This;};
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 74 "scanner.l"
+#line 75 "scanner.l"
 {return T_Extends;};
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 75 "scanner.l"
+#line 76 "scanner.l"
 {return T_Implements;};
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 76 "scanner.l"
+#line 77 "scanner.l"
 {return T_For;};
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 77 "scanner.l"
+#line 78 "scanner.l"
 {return T_While;};
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 78 "scanner.l"
+#line 79 "scanner.l"
 {return T_If;};
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 79 "scanner.l"
+#line 80 "scanner.l"
 {return T_Else;};
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 80 "scanner.l"
+#line 81 "scanner.l"
 {return T_Return;};
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 81 "scanner.l"
+#line 82 "scanner.l"
 {return T_Break;};
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 82 "scanner.l"
+#line 83 "scanner.l"
 {return T_New;};
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 83 "scanner.l"
+#line 84 "scanner.l"
 {return T_NewArray;};
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 84 "scanner.l"
+#line 85 "scanner.l"
 {return T_Equal;};
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 85 "scanner.l"
+#line 86 "scanner.l"
 {return T_LessEqual;};
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 86 "scanner.l"
+#line 87 "scanner.l"
 {return T_GreaterEqual;};
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 87 "scanner.l"
+#line 88 "scanner.l"
 {return T_NotEqual;};
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 88 "scanner.l"
+#line 89 "scanner.l"
 {return T_And;};
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 89 "scanner.l"
+#line 90 "scanner.l"
 {return T_Or;};
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 90 "scanner.l"
+#line 91 "scanner.l"
 {return 1;};
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 91 "scanner.l"
+#line 92 "scanner.l"
 {return 0;};
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 92 "scanner.l"
+#line 93 "scanner.l"
 {nRow++; nCol = 1;};
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 93 "scanner.l"
+#line 94 "scanner.l"
 {nCol += 8;};
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 94 "scanner.l"
+#line 95 "scanner.l"
 {};
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 96 "scanner.l"
-{int i; nMacros++; i = 8; while(yytext[i] != ' '){nameLength++; i++;}; if(nameLength > maxNameLength)maxNameLength = nameLength; printf("%d\n", nameLength); return 0;};
+#line 97 "scanner.l"
+{
+  // Longitude de #define_
+  int i = 8;
+  nMacro++;
+  // Obtener nombre de macro.
+  while(yytext[i] != ' '){
+    names[nMacro][i]  = yytext[i];
+    i++;
+  }
+  i++;
+  // Obtener valor de macro.
+  while(yytext[i] != '\n'){
+    values[nMacro][i] = yytext[i];
+  }
+  return 0;
+};
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 98 "scanner.l"
+#line 114 "scanner.l"
 {return yytext[0];};
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 100 "scanner.l"
+#line 116 "scanner.l"
 {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 101 "scanner.l"
+#line 117 "scanner.l"
 {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 103 "scanner.l"
+#line 119 "scanner.l"
 {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 105 "scanner.l"
+#line 121 "scanner.l"
 {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 107 "scanner.l"
+#line 123 "scanner.l"
 {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 109 "scanner.l"
+#line 125 "scanner.l"
 {ReportError::UnrecogChar(&yylloc, yytext[0]); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 111 "scanner.l"
+#line 127 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1281 "lex.yy.c"
+#line 1297 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2424,7 +2440,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 111 "scanner.l"
+#line 127 "scanner.l"
 
 
 /* The closing %% above marks the end of the Rules section and the beginning
@@ -2451,8 +2467,15 @@ void InitScanner()
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
     nRow = nCol = 1;
-    maxDescLength = maxNameLength = -1;
-    nMacros = nameLength = 0;
+    nMacro = 0;
+    /* Inicializar arreglos */
+    names  = (char**) malloc(200 * 30 * sizeof(char));
+    values = (char**) malloc(200 * 200 * sizeof(char));
+
+    // Posibles opciones para evitar
+    // Inicializar los arreglos demasiado grandes.
+    // maxDescLength = maxNameLength = -1;
+
 }
 
 

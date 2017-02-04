@@ -5,8 +5,6 @@
  */
  
 #include "scanner.h"
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
 
 /* Function: main()
