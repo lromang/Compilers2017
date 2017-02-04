@@ -460,8 +460,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	(yy_c_buf_p) = yy_cp;
 
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 40
-#define YY_END_OF_BUFFER 41
+#define YY_NUM_RULES 41
+#define YY_END_OF_BUFFER 42
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -471,10 +471,10 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[147] =
     {   0,
-        0,    0,   41,   39,   29,   28,   30,   33,   39,   39,
-       33,   39,   33,   34,   34,   33,   33,   33,   37,   37,
+        0,    0,   42,   40,   29,   28,   30,   33,   39,   40,
+       33,   40,   33,   34,   34,   33,   33,   33,   37,   37,
        37,   37,   37,   37,   37,   37,   37,   37,   37,   37,
-       37,   37,   39,   23,    0,   38,   32,    0,   24,   34,
+       37,   37,   40,   23,   39,   38,   32,    0,   24,   34,
        34,   36,   34,    0,   21,   20,   22,   37,   37,   37,
        37,   37,   37,   37,   37,   37,   37,   14,   37,   37,
        37,   37,   37,   37,   37,   37,   37,   25,    0,   36,
@@ -642,12 +642,12 @@ static char *yy_last_accepting_cpos;
 extern int yy_flex_debug;
 int yy_flex_debug = 1;
 
-static yyconst flex_int16_t yy_rule_linenum[40] =
+static yyconst flex_int16_t yy_rule_linenum[41] =
     {   0,
        66,   67,   68,   69,   70,   71,   72,   73,   74,   75,
        76,   77,   78,   79,   80,   81,   82,   83,   84,   85,
        86,   87,   88,   89,   90,   91,   92,   93,   94,   95,
-       97,  123,  131,  133,  134,  136,  138,  146,  148
+       97,  123,  131,  133,  134,  136,  138,  146,  148,  150
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1063,13 +1063,13 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				fprintf( stderr, "--scanner backing up\n" );
-			else if ( yy_act < 40 )
+			else if ( yy_act < 41 )
 				fprintf( stderr, "--accepting rule at line %ld (\"%s\")\n",
 				         (long)yy_rule_linenum[yy_act], yytext );
-			else if ( yy_act == 40 )
+			else if ( yy_act == 41 )
 				fprintf( stderr, "--accepting default rule (\"%s\")\n",
 				         yytext );
-			else if ( yy_act == 41 )
+			else if ( yy_act == 42 )
 				fprintf( stderr, "--(end of buffer or a NUL)\n" );
 			else
 				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
@@ -1316,14 +1316,19 @@ YY_RULE_SETUP
 case 39:
 YY_RULE_SETUP
 #line 148 "scanner.l"
-{ReportError::UnrecogChar(&yylloc, yytext[0]); }
+{ ReportError::UntermString(&yylloc, yytext); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 150 "scanner.l"
+{ReportError::UnrecogChar(&yylloc, yytext[0]); }
+	YY_BREAK
+case 41:
+YY_RULE_SETUP
+#line 152 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1327 "lex.yy.c"
+#line 1332 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2470,7 +2475,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 150 "scanner.l"
+#line 152 "scanner.l"
 
 
 /* The closing %% above marks the end of the Rules section and the beginning

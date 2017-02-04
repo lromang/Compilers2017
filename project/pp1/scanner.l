@@ -145,6 +145,8 @@ return T_Identifier;}
 
 (\"[^\"\n]*\")                               {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
 
+(\"[^\"\n]*)                                 { ReportError::UntermString(&yylloc, yytext); }
+
 .                                            {ReportError::UnrecogChar(&yylloc, yytext[0]); }
 
 %%
