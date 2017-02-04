@@ -45,7 +45,9 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
  */
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
- int nRow, nCol;
+ int  nRow, nCol, nMacros, maxNameLength, maxDescLength, nameLength;
+ char** names;
+ char** values;
 %}
 
  /* The section before the first %% is the Definitions section of the lex
@@ -91,6 +93,8 @@ static void DoBeforeEachAction();
 [\t]             {nCol += 8;};
 [ \t\n]          {};
 
+"#define "([A-Z])                            {int i; nMacros++; i = 8; while(yytext[i] != ' '){nameLength++; i++;}; if(nameLength > maxNameLength)maxNameLength = nameLength; printf("%d\n", nameLength); return 0;};
+
 ([-+/*%=.,;!<>()[\]{}])                      {return yytext[0];};
 
 (([\+-])?[0-9]+)                             {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
@@ -101,8 +105,6 @@ static void DoBeforeEachAction();
 ([A-Za-z_][A-Za-z_0-9]*)                     {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
 
 (\"[^\"\n]*\")                               {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
-
-"#define "
 
 .                                            {ReportError::UnrecogChar(&yylloc, yytext[0]); }
 
@@ -131,6 +133,8 @@ void InitScanner()
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
     nRow = nCol = 1;
+    maxDescLength = maxNameLength = -1;
+    nMacros = nameLength = 0;
 }
 
 

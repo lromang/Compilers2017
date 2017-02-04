@@ -23,12 +23,6 @@ int main(int argc, char *argv[])
 {
   char ch;
   char lookAHead;
-  /*char string[512];
-  scanf("%s", string);
-  if(strcmp(string,"#define") == 0){
-    printf("SUCCCESSS!!!");
-  }
-  */
   while ((ch = getc(stdin)) != EOF){
   read1 :
     if(ch == '/'){
