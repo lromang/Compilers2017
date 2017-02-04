@@ -647,7 +647,7 @@ static yyconst flex_int16_t yy_rule_linenum[41] =
        67,   68,   69,   70,   71,   72,   73,   74,   75,   76,
        77,   78,   79,   80,   81,   82,   83,   84,   85,   86,
        87,   88,   89,   90,   91,   92,   93,   94,   95,   96,
-       98,  115,  120,  122,  123,  125,  127,  135,  137,  139
+       98,  114,  123,  125,  126,  128,  130,  138,  140,  142
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -709,7 +709,7 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
  int nRow, nCol, nMacro;
- std::map<std::string, int> macros, values;
+ std::map<std::string, std::string> macros, values;
 /* The section before the first %% is the Definitions section of the lex
 * input file. Here is where you set options for the scanner, define lex
 * states, and can set up definitions to give names to regular expressions
@@ -1242,7 +1242,6 @@ case 31:
 YY_RULE_SETUP
 #line 98 "scanner.l"
 {
-  int i, k;
   // Obtener nombre de macro.
   std::string def       = yytext;
   std::string delimiter = " ";
@@ -1251,8 +1250,8 @@ YY_RULE_SETUP
   delimiter = name;
   std::string value     = def.substr(1, def.find(delimiter));
   // Insertar valor y nombre en Map.
-  macros.insert(std::make_pair(name, nMacro));
-  values.insert(std::make_pair(value, nMacro));
+  macros.insert(std::make_pair(name,  value));
+  // values.insert(std::make_pair(value, nMacro));
   // Incrementar el número de macros.
   nMacro++;
   return 0;
@@ -1260,35 +1259,39 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 115 "scanner.l"
+#line 114 "scanner.l"
 {
-  int i;
-  return 0;
+  // Obtener nombre de macro.
+  std::string def       = yytext;
+  std::string delimiter = "#";
+  std::string name      = def.substr(0, def.find(delimiter));
+  printf("%s\n", macros[name]);
+  return 0;//macros[name];
 }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 120 "scanner.l"
+#line 123 "scanner.l"
 {return yytext[0];};
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 122 "scanner.l"
+#line 125 "scanner.l"
 {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 123 "scanner.l"
+#line 126 "scanner.l"
 {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 125 "scanner.l"
+#line 128 "scanner.l"
 {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 127 "scanner.l"
+#line 130 "scanner.l"
 {
 if(strlen(yytext) > 31){
 ReportError::LongIdentifier(&yylloc, yytext);
@@ -1299,25 +1302,25 @@ return T_Identifier;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 135 "scanner.l"
+#line 138 "scanner.l"
 {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 137 "scanner.l"
+#line 140 "scanner.l"
 { ReportError::UntermString(&yylloc, yytext); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 139 "scanner.l"
+#line 142 "scanner.l"
 {ReportError::UnrecogChar(&yylloc, yytext[0]); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 141 "scanner.l"
+#line 144 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1321 "lex.yy.c"
+#line 1324 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2464,7 +2467,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 141 "scanner.l"
+#line 144 "scanner.l"
 
 
 /* The closing %% above marks the end of the Rules section and the beginning

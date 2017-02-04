@@ -49,7 +49,7 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
  int nRow, nCol, nMacro;
- std::map<std::string, int> macros, values;
+ std::map<std::string, std::string> macros, values;
 %}
 
  /* The section before the first %% is the Definitions section of the lex
@@ -96,7 +96,6 @@ static void DoBeforeEachAction();
 [ \t\n]          {};
 
 "#define "([A-Z]+.*) {
-  int i, k;
   // Obtener nombre de macro.
   std::string def       = yytext;
   std::string delimiter = " ";
@@ -105,19 +104,23 @@ static void DoBeforeEachAction();
   delimiter = name;
   std::string value     = def.substr(1, def.find(delimiter));
   // Insertar valor y nombre en Map.
-  macros.insert(std::make_pair(name, nMacro));
-  values.insert(std::make_pair(value, nMacro));
+  macros.insert(std::make_pair(name,  value));
+  // values.insert(std::make_pair(value, nMacro));
   // Incrementar el número de macros.
   nMacro++;
   return 0;
 };
 
 "#"([A-Z]+) {
-  int i;
-  return 0;
+  // Obtener nombre de macro.
+  std::string def       = yytext;
+  std::string delimiter = "#";
+  std::string name      = def.substr(0, def.find(delimiter));
+  printf("%s\n", macros[name]);
+  return 0;//macros[name];
 }
 
-([-+/*%=.,;!<>()[\]{}])                      {return yytext[0];};
+([-+/*%=.,;!<>()[\]{}])                     {return yytext[0];};
 
 (([\-])?[0-9]+)                             {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
 (([\-])?0[xX][0-9A-Fa-f]+)                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
