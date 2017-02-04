@@ -125,18 +125,23 @@ static void DoBeforeEachAction();
   for(i = 0; (i < nMacro) && (strcmp(yytext, names[i]) != 0) ; i++);
   if(i == nMacro) ReportError::UnrecogChar(&yylloc, yytext[0]);
   // Imprimir resultados.
-  while(i < )
   return 0;
 }
 
 ([-+/*%=.,;!<>()[\]{}])                      {return yytext[0];};
 
-(([\+-])?[0-9]+)                             {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
-(([\+-])?0[xX][0-9A-Fa-f]+)                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
+(([\-])?[0-9]+)                             {yylval.integerConstant = strtol(yytext, NULL, 10); return T_IntConstant;};
+(([\-])?0[xX][0-9A-Fa-f]+)                  {yylval.integerConstant = strtol(yytext, NULL, 16); return T_IntConstant;};
 
 ([0-9]+(\.[0-9]*([Ee]([(\+|\-)])?[0-9]+)?))  {yylval.doubleConstant  = atof(yytext); return T_DoubleConstant;};
 
-([A-Za-z_][A-Za-z_0-9]*)                     {if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
+([A-Za-z_][A-Za-z_0-9]*)                     {
+if(strlen(yytext) > 31){
+ReportError::LongIdentifier(&yylloc, yytext);
+}
+strncpy(yylval.identifier, yytext, 31);
+yylval.identifier[MaxIdentLen] = '\0';
+return T_Identifier;}
 
 (\"[^\"\n]*\")                               {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
 

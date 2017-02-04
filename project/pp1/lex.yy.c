@@ -495,7 +495,7 @@ static yyconst YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    4,    5,    6,    7,    1,    8,    9,    1,   10,
-       10,    8,   11,    8,   11,   12,    8,   13,   14,   14,
+       10,    8,   10,    8,   11,   12,    8,   13,   14,   14,
        14,   14,   14,   14,   14,   14,   14,    1,    8,   15,
        16,   17,    1,    1,   18,   19,   19,   19,   20,   19,
        21,   21,   21,   21,   21,   21,   21,   22,   21,   21,
@@ -647,7 +647,7 @@ static yyconst flex_int16_t yy_rule_linenum[40] =
        66,   67,   68,   69,   70,   71,   72,   73,   74,   75,
        76,   77,   78,   79,   80,   81,   82,   83,   84,   85,
        86,   87,   88,   89,   90,   91,   92,   93,   94,   95,
-       97,  123,  131,  133,  134,  136,  138,  140,  142
+       97,  123,  131,  133,  134,  136,  138,  146,  148
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1300,24 +1300,30 @@ YY_RULE_SETUP
 case 37:
 YY_RULE_SETUP
 #line 138 "scanner.l"
-{if(strlen(yytext) > 31){printf("Identificador muy largo"); return -1;};return T_Identifier;}
+{
+if(strlen(yytext) > 31){
+ReportError::LongIdentifier(&yylloc, yytext);
+}
+strncpy(yylval.identifier, yytext, 31);
+yylval.identifier[MaxIdentLen] = '\0';
+return T_Identifier;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 140 "scanner.l"
+#line 146 "scanner.l"
 {yylval.stringConstant = strdup(yytext); return T_StringConstant;};
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 142 "scanner.l"
+#line 148 "scanner.l"
 {ReportError::UnrecogChar(&yylloc, yytext[0]); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 144 "scanner.l"
+#line 150 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1321 "lex.yy.c"
+#line 1327 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2464,7 +2470,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 144 "scanner.l"
+#line 150 "scanner.l"
 
 
 /* The closing %% above marks the end of the Rules section and the beginning
