@@ -48,10 +48,8 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
  */
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
- std::map<std::string, int> macros;
- int  nRow, nCol, nMacro; //, maxNameLength, maxDescLength, nameLength;
- char** names;
- char** values;
+ int nRow, nCol, nMacro;
+ std::map<std::string, int> macros, values;
 %}
 
  /* The section before the first %% is the Definitions section of the lex
@@ -99,20 +97,23 @@ static void DoBeforeEachAction();
 
 "#define "([A-Z]+.*) {
   int i, k;
-  // Obtener nombre de macro. con split
-  // y usar el map
-  // 8 = longitud(#define_)
-  // char * name = (yytext);
-  // macros.insert(std::make_pair(names[k]));
+  // Obtener nombre de macro.
+  std::string def       = yytext;
+  std::string delimiter = " ";
+  std::string name      = def.substr(1, def.find(delimiter));
   // Obtener valor de macro.
+  delimiter = name;
+  std::string value     = def.substr(1, def.find(delimiter));
+  // Insertar valor y nombre en Map.
+  macros.insert(std::make_pair(name, nMacro));
+  values.insert(std::make_pair(value, nMacro));
+  // Incrementar el número de macros.
+  nMacro++;
   return 0;
 };
 
 "#"([A-Z]+) {
   int i;
-  for(i = 0; (i < nMacro) && (strcmp(yytext, names[i]) != 0) ; i++);
-  if(i == nMacro) ReportError::UnrecogChar(&yylloc, yytext[0]);
-  // Imprimir resultados.
   return 0;
 }
 
@@ -161,16 +162,8 @@ void InitScanner()
 {
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
-    nRow = nCol = 1;
+    nRow   = nCol = 1;
     nMacro = 0;
-    /* Inicializar arreglos */
-    names  = (char**) malloc(50 * 30 * sizeof(char));
-    values = (char**) malloc(50 * 200 * sizeof(char));
-
-    // Posibles opciones para evitar
-    // Inicializar los arreglos demasiado grandes.
-    // maxDescLength = maxNameLength = -1;
-
 }
 
 
