@@ -1263,7 +1263,7 @@ YY_RULE_SETUP
   std::string def       = yytext;
   std::string delimiter = "#";
   std::string name      = def.substr(0, def.find(delimiter));
-  printf("%s\n", macros[name]);
+  // printf("%s\n", macros[name]);
   return 0;//macros[name];
 }
 	YY_BREAK
