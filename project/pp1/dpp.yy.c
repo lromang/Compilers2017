@@ -388,7 +388,7 @@ struct yy_trans_info
 static yyconst flex_int16_t yy_accept[19] =
     {   0,
         0,    0,    5,    3,    4,    3,    2,    0,    0,    0,
-        0,    0,    0,    0,    1,    1,    1,    0
+        0,    0,    0,    0,    0,    1,    1,    0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -431,27 +431,27 @@ static yyconst YY_CHAR yy_meta[11] =
 static yyconst flex_uint16_t yy_base[21] =
     {   0,
         0,    3,   21,   22,   22,    3,   15,   12,   10,    8,
-        6,    8,   11,    8,    7,    0,    1,   22,    9,    0
+        6,    8,    8,    1,    7,    0,    0,   22,   12,    0
     } ;
 
 static yyconst flex_int16_t yy_def[21] =
     {   0,
        19,   19,   18,   18,   18,   18,   18,   18,   18,   18,
-       18,   18,   18,   18,   20,   20,   20,    0,   18,   18
+       18,   18,   18,   18,   18,   20,   20,    0,   18,   18
     } ;
 
 static yyconst flex_uint16_t yy_nxt[33] =
     {   0,
-       16,    5,   18,    6,    5,   17,    6,    7,    8,    4,
-        4,   17,   15,   14,   13,   12,   11,   10,    9,    7,
+       17,    5,   18,    6,    5,   15,    6,    7,    8,   16,
+       14,   15,    4,    4,   13,   12,   11,   10,    9,    7,
        18,    3,   18,   18,   18,   18,   18,   18,   18,   18,
        18,   18
     } ;
 
 static yyconst flex_int16_t yy_chk[33] =
     {   0,
-       20,    1,    0,    1,    2,   17,    2,    6,    6,   19,
-       19,   15,   14,   13,   12,   11,   10,    9,    8,    7,
+       20,    1,    0,    1,    2,   14,    2,    6,    6,   15,
+       13,   15,   19,   19,   12,   11,   10,    9,    8,    7,
         3,   18,   18,   18,   18,   18,   18,   18,   18,   18,
        18,   18
     } ;
@@ -773,39 +773,36 @@ YY_RULE_SETUP
   // Encontrar split entre nombre y valor.
   int name_val_split    = name_val.find(" ");
   std::string name      = name_val.substr(0, name_val_split);
-  std::string value     = name_val.substr(name_val_split);
+  std::string value     = name_val.substr(name_val_split + 1);
   // Insertar valor y nombre en Map.
   macros.insert(std::make_pair(name,  value));
-  // Incrementar el número de macros.
 };
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 34 "dpp.l"
+#line 33 "dpp.l"
 {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
   std::string name      = def.substr(1);
   std::string value     = macros.find(name)->second;
-  printf("%s\n", value.c_str());
-  //std::copy(macros[name].begin(), macros[name].end(), yytext);
-  //return 0;//macros[name];
+  printf("%s", value.c_str());
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 45 "dpp.l"
+#line 41 "dpp.l"
 {
-        string texto = strdup(yytext);
-        printf("%s", texto.c_str());
+    std::string text = strdup(yytext);
+    printf("%s", text.c_str());
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 50 "dpp.l"
+#line 46 "dpp.l"
 ECHO;
 	YY_BREAK
-#line 809 "dpp.yy.c"
+#line 806 "dpp.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1806,7 +1803,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 50 "dpp.l"
+#line 46 "dpp.l"
 
 
 

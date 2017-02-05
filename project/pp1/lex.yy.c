@@ -2448,7 +2448,7 @@ void InitScanner()
 {
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
-    nRow   = nCol = 1;
+    nRow  = nCol = 1;
 }
 
 
