@@ -48,8 +48,7 @@ struct yyltype yylloc; // manually dclared for pp1, later Yacc provides
  */
 static void DoBeforeEachAction(); 
 #define YY_USER_ACTION DoBeforeEachAction();
- int nRow, nCol, nMacro;
- std::map<std::string, std::string> macros, values;
+ int nRow, nCol;
 %}
 
  /* The section before the first %% is the Definitions section of the lex
@@ -95,31 +94,6 @@ static void DoBeforeEachAction();
 [\t]             {nCol += 8;};
 [ \t\n]          {};
 
-"#define "([A-Z]+.*) {
-  // Obtener nombre de macro.
-  std::string def       = yytext;
-  std::string delimiter = " ";
-  std::string name      = def.substr(1, def.find(delimiter));
-  // Obtener valor de macro.
-  delimiter = name;
-  std::string value     = def.substr(1, def.find(delimiter));
-  // Insertar valor y nombre en Map.
-  macros.insert(std::make_pair(name,  value));
-  // values.insert(std::make_pair(value, nMacro));
-  // Incrementar el número de macros.
-  nMacro++;
-  return 0;
-};
-
-"#"([A-Z]+) {
-  // Obtener nombre de macro.
-  std::string def       = yytext;
-  std::string delimiter = "#";
-  std::string name      = def.substr(1, def.find(delimiter));
-  // printf("%s\n", macros[name]);
-  std::copy(macros[name].begin(), macros[name].end(), yytext);
-  return 0;//macros[name];
-}
 
 ([-+/*%=.,;!<>()[\]{}])                     {return yytext[0];};
 
@@ -167,7 +141,6 @@ void InitScanner()
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
     nRow   = nCol = 1;
-    nMacro = 0;
 }
 
 

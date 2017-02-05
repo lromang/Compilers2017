@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 {
   char ch;
   char lookAHead;
+  yylex();
   while ((ch = getc(stdin)) != EOF){
   read1 :
     if(ch == '/'){
