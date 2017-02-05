@@ -37,10 +37,7 @@ std::map<std::string, std::string> macros, values;
   std::string name      = def.substr(1);
   std::string value     = macros.find(name)->second;
   printf("%s\n", value.c_str());
-  //std::copy(macros[name].begin(), macros[name].end(), yytext);
-  //return 0;//macros[name];
 }
-
 
 . {
         string texto = strdup(yytext);
