@@ -3,8 +3,8 @@
  * This file defines the main() routine for the preprocessor, 
  * the filtering tool which runs before the compiler.
  */
- 
 #include "scanner.h"
+#include "errors.h"
 #include <stdio.h>
 
 /* Function: main()
@@ -19,26 +19,32 @@
  */
 int main(int argc, char *argv[])
 {
-  char ch;
-  char lookAHead;
   yylex();
-  while ((ch = getc(stdin)) != EOF){
-  read1 :
-    if(ch == '/'){
-      lookAHead = getc(stdin);
-      if(lookAHead == '/'){
-        while(getc(stdin) != '\n');
-      }else if(lookAHead == '*'){
-        while((getc(stdin) != '*') &&  (getc(stdin) != '/'));
-        goto read1;
-      }else{
-        putc(ch, stdout);
-        putc(lookAHead, stdout);
-      }
-    }else{
-      putc(ch, stdout);
+  char ch, lookAHead, aster, diag;
+    //
+    while ((ch = getc(stdin)) != EOF){
+    read1 :
+        if(ch == '/'){
+            lookAHead = getc(stdin);
+            if(lookAHead == '/'){
+                while(getc(stdin) != '\n');
+            }else if(lookAHead == '*'){
+                while(((aster = getc(stdin)) != '*') &&  ((diag = getc(stdin)) != '/')){
+                    if(aster == '\n' || diag == '\n');
+                    if(aster == EOF){
+                        ReportError::UntermComment();
+                        break;
+                    }
+                };
+                goto read1;
+            }else{
+                putc(ch, stdout);
+                putc(lookAHead, stdout);
+            }
+        }else{
+            putc(ch, stdout);
+        }
     }
-  }
   return 0;
 }
 

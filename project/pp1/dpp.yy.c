@@ -376,8 +376,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 5
-#define YY_END_OF_BUFFER 6
+#define YY_NUM_RULES 8
+#define YY_END_OF_BUFFER 9
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -385,10 +385,12 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[19] =
+static yyconst flex_int16_t yy_accept[32] =
     {   0,
-        0,    0,    6,    4,    1,    4,    3,    0,    0,    0,
-        0,    0,    0,    0,    0,    2,    2,    0
+        0,    0,    0,    0,    9,    7,    1,    7,    7,    8,
+        6,    0,    2,    3,    0,    0,    0,    0,    3,    0,
+        0,    0,    4,    0,    0,    0,    0,    0,    5,    5,
+        0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -397,14 +399,14 @@ static yyconst YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    3,    1,    1,    4,    1,    1,    1,    1,    1,
+        1,    5,    1,    1,    1,    1,    6,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    5,    5,    5,    5,    5,    5,
-        5,    5,    5,    5,    5,    5,    5,    5,    5,    5,
-        5,    5,    5,    5,    5,    5,    5,    5,    5,    5,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    6,
+        1,    1,    1,    1,    7,    7,    7,    7,    7,    7,
+        7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
+        7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    8,
 
-        7,    8,    1,    1,    9,    1,    1,    1,    1,   10,
+        9,   10,    1,    1,   11,    1,    1,    1,    1,   12,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -423,37 +425,48 @@ static yyconst YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst YY_CHAR yy_meta[11] =
+static yyconst YY_CHAR yy_meta[13] =
     {   0,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    1
+        1,    2,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1
     } ;
 
-static yyconst flex_uint16_t yy_base[21] =
+static yyconst flex_uint16_t yy_base[38] =
     {   0,
-        0,    3,   21,   22,   22,    3,   15,   12,   10,    8,
-        6,    8,    8,    1,    7,    0,    0,   22,   12,    0
+        0,    5,    0,    0,   29,   54,   54,    5,    9,   54,
+       19,   16,   14,    0,   12,   18,   22,   26,    0,   10,
+       31,   35,   54,    6,    8,    7,    1,   38,    0,    0,
+       54,   45,   47,   49,    2,   51,    0
     } ;
 
-static yyconst flex_int16_t yy_def[21] =
+static yyconst flex_int16_t yy_def[38] =
     {   0,
-       19,   19,   18,   18,   18,   18,   18,   18,   18,   18,
-       18,   18,   18,   18,   18,   20,   20,    0,   18,   18
+       32,   32,   33,   33,   31,   31,   31,   31,   31,   31,
+       31,   31,   34,   35,   31,   34,   34,   36,   35,   31,
+       34,   34,   31,   31,   31,   31,   31,   31,   37,   37,
+        0,   31,   31,   31,   31,   31,   31
     } ;
 
-static yyconst flex_uint16_t yy_nxt[33] =
+static yyconst flex_uint16_t yy_nxt[67] =
     {   0,
-       17,    5,   18,    6,    5,   15,    6,    7,    8,   16,
-       14,   15,    4,    4,   13,   12,   11,   10,    9,    7,
-       18,    3,   18,   18,   18,   18,   18,   18,   18,   18,
-       18,   18
+       30,    7,   19,    8,   31,    9,    7,   28,    8,   27,
+        9,   11,   12,   13,   14,   17,   26,   25,   18,   17,
+       24,   20,   18,   17,   15,   11,   18,   22,   31,   31,
+       18,   23,   17,   31,   31,   18,   17,   31,   31,   18,
+       29,   31,   31,   31,   28,    6,    6,   10,   10,   16,
+       16,   21,   21,    5,   31,   31,   31,   31,   31,   31,
+       31,   31,   31,   31,   31,   31
     } ;
 
-static yyconst flex_int16_t yy_chk[33] =
+static yyconst flex_int16_t yy_chk[67] =
     {   0,
-       20,    1,    0,    1,    2,   14,    2,    6,    6,   15,
-       13,   15,   19,   19,   12,   11,   10,    9,    8,    7,
-        3,   18,   18,   18,   18,   18,   18,   18,   18,   18,
-       18,   18
+       37,    1,   35,    1,    0,    1,    2,   27,    2,   26,
+        2,    8,    8,    9,    9,   13,   25,   24,   13,   16,
+       20,   15,   16,   17,   12,   11,   17,   18,    5,    0,
+       18,   18,   21,    0,    0,   21,   22,    0,    0,   22,
+       28,    0,    0,    0,   28,   32,   32,   33,   33,   34,
+       34,   36,   36,   31,   31,   31,   31,   31,   31,   31,
+       31,   31,   31,   31,   31,   31
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -487,10 +500,20 @@ char *yytext;
 using namespace std;
 
 std::map<std::string, std::string> macros, values;
- int nRow =  1;
-#line 492 "dpp.yy.c"
+int nRow =  1;
+int count_chars(string s, char c) {
+  int count = 0;
+
+  for (int i = 0; i < s.size(); i++)
+    if (s[i] == c) count++;
+
+  return count;
+}
+
+#line 514 "dpp.yy.c"
 
 #define INITIAL 0
+#define COMMENT_STATE 1
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -571,6 +594,16 @@ static int input (void );
 
 #endif
 
+        static int yy_start_stack_ptr = 0;
+        static int yy_start_stack_depth = 0;
+        static int *yy_start_stack = NULL;
+    
+    static void yy_push_state (int _new_state );
+    
+    static void yy_pop_state (void );
+    
+    static int yy_top_state (void );
+    
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
 #ifdef __ia64__
@@ -706,10 +739,10 @@ YY_DECL
 		}
 
 	{
-#line 22 "dpp.l"
+#line 32 "dpp.l"
 
 
-#line 713 "dpp.yy.c"
+#line 746 "dpp.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -736,13 +769,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 19 )
+				if ( yy_current_state >= 32 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 22 );
+		while ( yy_base[yy_current_state] != 54 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -769,7 +802,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 24 "dpp.l"
+#line 34 "dpp.l"
 {nRow++;
     std::string text = strdup(yytext);
     printf("%s", text.c_str());
@@ -777,7 +810,42 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 29 "dpp.l"
+#line 40 "dpp.l"
+{
+        BEGIN(COMMENT_STATE);
+        yy_push_state(COMMENT_STATE);
+}
+	YY_BREAK
+case YY_STATE_EOF(COMMENT_STATE):
+#line 45 "dpp.l"
+{
+        ReportError::UntermComment();
+        yy_pop_state();
+}
+	YY_BREAK
+case 3:
+YY_RULE_SETUP
+#line 50 "dpp.l"
+{ /* printf("%s", "\n"); */ }
+	YY_BREAK
+case 4:
+/* rule 4 can match eol */
+YY_RULE_SETUP
+#line 52 "dpp.l"
+{
+
+        string texto = strdup(yytext);
+        int num_lineas = count_chars(texto, '\n');
+
+        for(int i = 0; i < num_lineas; i++){
+                printf("%s", "\n");
+        }
+
+}
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 63 "dpp.l"
 {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
@@ -790,32 +858,37 @@ YY_RULE_SETUP
   macros.insert(std::make_pair(name,  value));
 };
 	YY_BREAK
-case 3:
+case 6:
 YY_RULE_SETUP
-#line 41 "dpp.l"
+#line 75 "dpp.l"
 {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
   std::string name      = def.substr(1);
-  if(macros.find(name) == macros.end()) ReportError::InvalidDirective(nRow);
-  std::string value     = macros.find(name)->second;
-  printf("%s", value.c_str());
+  //std::string value     = macros.find(name)->second;
+  //printf("%s", value.c_str());
+  if(macros.find(name) == macros.end()){
+      ReportError::InvalidDirective(nRow);
+  }else{
+      std::string value     = macros.find(name)->second;
+      printf("%s", value.c_str());
+  }
 }
 	YY_BREAK
-case 4:
+case 7:
 YY_RULE_SETUP
-#line 50 "dpp.l"
+#line 89 "dpp.l"
 {
     std::string text = strdup(yytext);
     printf("%s", text.c_str());
 }
 	YY_BREAK
-case 5:
+case 8:
 YY_RULE_SETUP
-#line 55 "dpp.l"
+#line 94 "dpp.l"
 ECHO;
 	YY_BREAK
-#line 819 "dpp.yy.c"
+#line 892 "dpp.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1108,7 +1181,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 19 )
+			if ( yy_current_state >= 32 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1136,11 +1209,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 19 )
+		if ( yy_current_state >= 32 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 18);
+	yy_is_jam = (yy_current_state == 31);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1609,6 +1682,43 @@ YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len 
 	return b;
 }
 
+    static void yy_push_state (int  _new_state )
+{
+    	if ( (yy_start_stack_ptr) >= (yy_start_stack_depth) )
+		{
+		yy_size_t new_size;
+
+		(yy_start_stack_depth) += YY_START_STACK_INCR;
+		new_size = (yy_start_stack_depth) * sizeof( int );
+
+		if ( ! (yy_start_stack) )
+			(yy_start_stack) = (int *) yyalloc(new_size  );
+
+		else
+			(yy_start_stack) = (int *) yyrealloc((void *) (yy_start_stack),new_size  );
+
+		if ( ! (yy_start_stack) )
+			YY_FATAL_ERROR( "out of memory expanding start-condition stack" );
+		}
+
+	(yy_start_stack)[(yy_start_stack_ptr)++] = YY_START;
+
+	BEGIN(_new_state);
+}
+
+    static void yy_pop_state  (void)
+{
+    	if ( --(yy_start_stack_ptr) < 0 )
+		YY_FATAL_ERROR( "start-condition stack underflow" );
+
+	BEGIN((yy_start_stack)[(yy_start_stack_ptr)]);
+}
+
+    static int yy_top_state  (void)
+{
+    	return (yy_start_stack)[(yy_start_stack_ptr) - 1];
+}
+
 #ifndef YY_EXIT_FAILURE
 #define YY_EXIT_FAILURE 2
 #endif
@@ -1729,6 +1839,10 @@ static int yy_init_globals (void)
     (yy_init) = 0;
     (yy_start) = 0;
 
+    (yy_start_stack_ptr) = 0;
+    (yy_start_stack_depth) = 0;
+    (yy_start_stack) =  NULL;
+
 /* Defined in main.c */
 #ifdef YY_STDINIT
     yyin = stdin;
@@ -1758,6 +1872,10 @@ int yylex_destroy  (void)
 	/* Destroy the stack itself. */
 	yyfree((yy_buffer_stack) );
 	(yy_buffer_stack) = NULL;
+
+    /* Destroy the start condition stack. */
+        yyfree((yy_start_stack)  );
+        (yy_start_stack) = NULL;
 
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
      * yylex() is called, initialization will occur. */
@@ -1816,7 +1934,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 55 "dpp.l"
+#line 94 "dpp.l"
 
 
 

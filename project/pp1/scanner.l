@@ -2,6 +2,7 @@
  * ----------------
  * Lex inupt file to generate the scanner for the compiler.
  */
+%option noyywrap
 
 %{
 
@@ -141,6 +142,7 @@ void InitScanner()
     PrintDebug("lex", "Initializing scanner");
     yy_flex_debug = false;
     nRow  = nCol = 1;
+    //
 }
 
 
