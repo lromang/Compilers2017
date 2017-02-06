@@ -376,8 +376,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
+#define YY_NUM_RULES 5
+#define YY_END_OF_BUFFER 6
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -387,8 +387,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[19] =
     {   0,
-        0,    0,    5,    3,    4,    3,    2,    0,    0,    0,
-        0,    0,    0,    0,    0,    1,    1,    0
+        0,    0,    6,    4,    1,    4,    3,    0,    0,    0,
+        0,    0,    0,    0,    0,    2,    2,    0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -482,11 +482,13 @@ char *yytext;
 #include <map>
 #include <string>
 #include <iostream>
+#include "errors.h"
+
 using namespace std;
 
 std::map<std::string, std::string> macros, values;
-
-#line 490 "dpp.yy.c"
+ int nRow =  1;
+#line 492 "dpp.yy.c"
 
 #define INITIAL 0
 
@@ -704,9 +706,10 @@ YY_DECL
 		}
 
 	{
-#line 20 "dpp.l"
+#line 22 "dpp.l"
 
-#line 710 "dpp.yy.c"
+
+#line 713 "dpp.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -764,8 +767,17 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 21 "dpp.l"
+#line 24 "dpp.l"
+{nRow++;
+    std::string text = strdup(yytext);
+    printf("%s", text.c_str());
+}
+	YY_BREAK
+case 2:
+YY_RULE_SETUP
+#line 29 "dpp.l"
 {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
@@ -778,31 +790,32 @@ YY_RULE_SETUP
   macros.insert(std::make_pair(name,  value));
 };
 	YY_BREAK
-case 2:
+case 3:
 YY_RULE_SETUP
-#line 33 "dpp.l"
+#line 41 "dpp.l"
 {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
   std::string name      = def.substr(1);
+  if(macros.find(name) == macros.end()) ReportError::InvalidDirective(nRow);
   std::string value     = macros.find(name)->second;
   printf("%s", value.c_str());
 }
 	YY_BREAK
-case 3:
+case 4:
 YY_RULE_SETUP
-#line 41 "dpp.l"
+#line 50 "dpp.l"
 {
     std::string text = strdup(yytext);
     printf("%s", text.c_str());
 }
 	YY_BREAK
-case 4:
+case 5:
 YY_RULE_SETUP
-#line 46 "dpp.l"
+#line 55 "dpp.l"
 ECHO;
 	YY_BREAK
-#line 806 "dpp.yy.c"
+#line 819 "dpp.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1803,7 +1816,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 46 "dpp.l"
+#line 55 "dpp.l"
 
 
 

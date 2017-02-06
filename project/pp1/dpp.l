@@ -10,14 +10,22 @@
 #include <map>
 #include <string>
 #include <iostream>
+#include "errors.h"
+
 using namespace std;
 
 std::map<std::string, std::string> macros, values;
-
+ int nRow =  1;
 %}
 
 
 %%
+
+\n {nRow++;
+    std::string text = strdup(yytext);
+    printf("%s", text.c_str());
+}
+
 "#define\ "([A-Z]+\ .*) {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
@@ -34,6 +42,7 @@ std::map<std::string, std::string> macros, values;
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
   std::string name      = def.substr(1);
+  if(macros.find(name) == macros.end()) ReportError::InvalidDirective(nRow);
   std::string value     = macros.find(name)->second;
   printf("%s", value.c_str());
 }
