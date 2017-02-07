@@ -11,22 +11,16 @@
 #include <string>
 #include <iostream>
 #include "errors.h"
+#include <algorithm>
 
 using namespace std;
 
 std::map<std::string, std::string> macros, values;
 int nRow =  1;
-int count_chars(string s, char c) {
-  int count = 0;
 
-  for (int i = 0; i < s.size(); i++)
-    if (s[i] == c) count++;
-
-  return count;
-}
 %}
 
-%x COMMENT_STATE
+%x STATE
 %option stack
 
 %%
@@ -38,23 +32,23 @@ int count_chars(string s, char c) {
 
 
 \/\* {
-        BEGIN(COMMENT_STATE);
-        yy_push_state(COMMENT_STATE);
+        BEGIN(STATE);
+        yy_push_state(STATE);
 }
 
-<COMMENT_STATE><<EOF>> {
+<STATE><<EOF>> {
         ReportError::UntermComment();
         yy_pop_state();
 }
+
 
 \/\/.* { /* printf("%s", "\n"); */ }
 
 \/\*([^*]|[\n]|(\*+([^*/]|[\n])))*\*+\/ {
 
-        string texto = strdup(yytext);
-        int num_lineas = count_chars(texto, '\n');
-
-        for(int i = 0; i < num_lineas; i++){
+        std::string texto = strdup(yytext);
+        int nRows = std::count(texto.begin(), texto.end(), '\n');
+        for(int i = 0; i < nRows; i++){
                 printf("%s", "\n");
         }
 
@@ -76,8 +70,6 @@ int count_chars(string s, char c) {
   // Obtener nombre de macro.
   std::string def       = strdup(yytext);
   std::string name      = def.substr(1);
-  //std::string value     = macros.find(name)->second;
-  //printf("%s", value.c_str());
   if(macros.find(name) == macros.end()){
       ReportError::InvalidDirective(nRow);
   }else{
