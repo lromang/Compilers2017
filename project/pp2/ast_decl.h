@@ -37,7 +37,7 @@ class VarDecl : public Decl
     void PrintChildren(int indentLevel);
 };
 
-class ClassDecl : public Decl 
+class ClassDecl : public Decl
 {
   protected:
     List<Decl*> *members;

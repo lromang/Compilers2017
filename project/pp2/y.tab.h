@@ -78,7 +78,9 @@ extern int yydebug;
     T_StringConstant = 288,
     T_IntConstant = 289,
     T_DoubleConstant = 290,
-    T_BoolConstant = 291
+    T_BoolConstant = 291,
+    T_UnaryMinus = 292,
+    T_NElse = 293
   };
 #endif
 /* Tokens.  */
@@ -116,6 +118,8 @@ extern int yydebug;
 #define T_IntConstant 289
 #define T_DoubleConstant 290
 #define T_BoolConstant 291
+#define T_UnaryMinus 292
+#define T_NElse 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -132,7 +136,7 @@ union YYSTYPE
     Decl *decl;
     List<Decl*> *declList;
 
-#line 136 "y.tab.h" /* yacc.c:1909  */
+#line 140 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

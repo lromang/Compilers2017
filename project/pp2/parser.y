@@ -82,61 +82,204 @@ void yyerror(char *msg); // standard error-handling routine
 %type <declList>  DeclList
 %type <decl>      Decl
 
+// Precedencia
+%nonassoc '='
+%left T_Or
+%left T_And
+%left T_Equal T_NotEqual
+%nonassoc '<' T_LessEqual '>' T_GreaterEqual
+%left '+' '-'
+%left '*' '/' '%'
+%left '!' T_UnaryMinus
+%left '[' '.'
+
+%nonassoc T_NElse
+%nonassoc T_Else
+
 %%
 /* Rules
  * -----
  * All productions and actions should be placed between the start and stop
  * %% markers which delimit the Rules section.
  */
-Program   :    DeclList            { 
-                                      Program *program = new Program($1);
-                                      // if no errors, advance to next phase
-                                      if (ReportError::NumErrors() == 0) 
-                                          program->Print(0);
-                                    }
+Program   :    DeclList             {
+                        @1; 
+                        /* pp2: The @1 is needed to convince 
+                         * yacc to set up yylloc. You can remove 
+                         * it once you have other uses of @n*/
+                        Program *program = new Program($1);
+                        // if no errors, advance to next phase
+                        if (ReportError::NumErrors() == 0) 
+                            program->Print(0);
+}
           ;
 
-DeclList  :    DeclList Decl        {
-                                      ($$=$1)->Append($2);
-                                    }
-          |    Decl                 {
-                                       ($$ = new List<Decl*>)->Append($1);
-                                    }
+DeclList  :    DeclList Decl        {}
+          |    Decl                 {}
           ;
 
-Decl      :    VarDecl              { () }
+Decl      :    VariableDecl         {}
           |    ClassDecl            {}
           |    InterfaceDecl        {}
-          |    FnDecl               {}
+          |    FunctionDecl         {}
           ;
 
-// Variable Declaration
 
-VarDecl   :    Variable ';'         {
-                                        $$ = $1;
-                                    }
+VariableDecl   :    Variable ';'    {}
+               ;
 
-Variable  :    Type T_identifier    {
-                                        $$ = new VarDecl(new Identifier(@2, $2), $1);
-                                    }
+Variable  :    Type T_Identifier    {}
+          ;
 
-Type      :    T_Int | T_Double | T_String | T_Bool | T_Identifier | Type T_Dims { $$ = $1; }
+Type      :    T_Int                {}
+          |    T_Double             {}
+          |    T_String             {}
+          |    T_Bool               {}
+          |    T_Identifier         {}
+          |    Type T_Dims          {}
+          ;
 
-// Function Declaration
+FunctionDecl   :    Type T_Identifier '(' Formals ')' StmtBlock   {}
+               |    T_Void T_Identifier '(' Formals ')' StmtBlock {}
+               ;
 
-FnDecl    :    Type T_identifier '(' Formals ')' StmtBlock
-          |    T_Void T_identifier '(' Formals ')' StmtBlock {}
+Formals   :    VarList              {}
+          |                         {}
+          ;
 
-VarList   :    VarList Variable     {
-                                        ($$=$1)->Append($2);
-                                    }
-          |    Variable             {
-                                        ($$ = new List<Variable*>)->Append($1);
-                                    }
+VarList   :    VarList ',' Variable {}
+          |    Variable             {}
+          ;
+
+ClassDecl :    T_Class T_Identifier '{' FieldList '}'                                               {}
+          |    T_Class T_Identifier T_Extends T_Identifier '{' FieldList '}'                        {}
+          |    T_Class T_Identifier T_Implements IdentList '{' FieldList '}'                        {}
+          |    T_Class T_Identifier T_Extends T_Identifier T_Implements IdentList '{' FieldList '}' {}
+          ;
+
+FieldList :    FieldList Field      {}
+          |                         {}
+          ;
+
+Field     :    VariableDecl | FunctionDecl {}
+          ;
+
+IdentList :    IdentList ',' T_Identifier  {}
+          |    T_Identifier                {}
+          ;
+
+InterfaceDecl : T_Interface T_Identifier '{' PrototypeList '}'  {}
+              ;
+
+PrototypeList : PrototypeList Prototype    {}
+              |                            {}
+              ;
+
+Prototype     : Type T_Identifier '(' Formals ')'';'  {}
+              | T_Void T_Identifier '('Formals')'';'  {}
+              ;
+
+StmtBlock     : '{' VariableDeclList StmtList '}'     {}
+              | '{' VariableDeclList '}'              {}
+              | '{' StmtList '}'                      {}
+              | '{''}'                                {}
+              ;
+
+VariableDeclList : VariableDeclList VariableDecl      {}
+                 | VariableDecl                       {}
+                 ;
+
+StmtList         : StmtList Stmt                      {}
+                 | Stmt                               {}
+                 ;
+
+Stmt             : IfStmt                             {}
+                 | WhileStmt                          {}
+                 | ForStmt                            {}
+                 | BreakStmt                          {}
+                 | ReturnStmt                         {}
+                 | PrintStmt                          {}
+                 | StmtBlock                          {}
+                 | ';'                                {}
+                 | Expr ';'                           {}
+                 ;
+
+IfStmt           : T_If '(' Expr ')' Stmt            %prec T_NElse  {}
+                 | T_If '(' Expr ')' Stmt T_Else Stmt               {}
+                 ;
+
+WhileStmt        : T_While '(' Expr ')' Stmt                    {}
+                 ;
+
+ForStmt          : T_For '(' ';' Expr ';' ')' Stmt              {}
+                 | T_For '(' Expr ';' Expr ';' ')' Stmt         {}
+                 | T_For '(' ';' Expr ';' Expr ')' Stmt         {}
+                 | T_For '(' Expr ';' Expr ';' Expr ')' Stmt    {}
+                 ;
+
+ReturnStmt       : T_Return ';'                {}
+                 | T_Return Expr ';'           {}
+                 ;
+
+BreakStmt        : T_Break ';'                 {}
+                 ;
+
+PrintStmt        : T_Print '(' ExprList ')'';' {}
+                 ;
+
+ExprList         : ExprList ',' Expr           {}
+                 | Expr                        {}
+                 ;
+
+Expr             : LValue '=' Expr                  {}
+                 | Constant                         {}
+                 | LValue                           {}
+                 | T_This                           {}
+                 | Call                             {}
+                 | '(' Expr ')'                     {}
+                 | Expr '+' Expr                    {}
+                 | Expr '-' Expr                    {}
+                 | Expr '*' Expr                    {}
+                 | Expr '/' Expr                    {}
+                 | Expr '%' Expr                    {}
+                 | '-' Expr  %prec T_UnaryMinus     {} 
+                 | Expr '<' Expr                    {}
+                 | Expr T_LessEqual Expr            {}
+                 | Expr '>' Expr                    {}
+                 | Expr T_GreaterEqual Expr         {}
+                 | Expr T_Equal Expr                {}
+                 | Expr T_NotEqual Expr             {}
+                 | Expr T_And Expr                  {}
+                 | Expr T_Or Expr                   {}
+                 | '!' Expr                         {}
+                 | T_ReadInteger '(' ')'            {}
+                 | T_ReadLine    '(' ')'            {}
+                 | T_New '(' T_Identifier ')'       {}
+                 | T_NewArray '(' Expr ',' Type ')' {}
+                 ;
+
+LValue           : T_Identifier                     {}
+                 | Expr '.' T_Identifier            {}
+                 | Expr '[' Expr ']'                {}
+                 ;
+
+Call             : T_Identifier '(' Actuals ')'              {}
+                 | Expr '.' T_Identifier '(' Actuals ')'     {}
+                 ;
+
+Actuals          : ExprList                         {}
+                 |                                  {}
+                 ;
+
+Constant         : T_IntConstant                    {}
+                 | T_DoubleConstant                 {}
+                 | T_BoolConstant                   {}
+                 | T_StringConstant                 {}
+                 | T_Null                           {}
+                 ;
 
 
-Formals   :    VarList ','
-          |    // Epsilon   
+
 
 %%
 

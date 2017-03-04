@@ -43,25 +43,25 @@ class Node
   public:
     Node(yyltype loc);
     Node();
-    
+
     yyltype *GetLocation()   { return location; }
     void SetParent(Node *p)  { parent = p; }
     Node *GetParent()        { return parent; }
 
     virtual const char *GetPrintNameForNode() = 0;
-    
+
     // Print() is deliberately _not_ virtual
     // subclasses should override PrintChildren() instead
     void Print(int indentLevel, const char *label = NULL); 
     virtual void PrintChildren(int indentLevel)  {}
 };
-   
+
 
 class Identifier : public Node 
 {
   protected:
     char *name;
-    
+
   public:
     Identifier(yyltype loc, const char *name);
     const char *GetPrintNameForNode()   { return "Identifier"; }
