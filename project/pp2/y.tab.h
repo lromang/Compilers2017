@@ -128,15 +128,38 @@ union YYSTYPE
 {
 #line 41 "parser.y" /* yacc.c:1909  */
 
-    int integerConstant;
-    bool boolConstant;
-    char *stringConstant;
+    int   integerConstant;
+    bool  boolConstant;
+    char  *stringConstant;
     double doubleConstant;
-    char identifier[MaxIdentLen+1]; // +1 for terminating null
-    Decl *decl;
+    char  identifier[MaxIdentLen+1]; // +1 for terminating null
+    Decl  *decl;
     List<Decl*> *declList;
+    List<NamedType*> *namedTypeList;
+    List<Stmt*> *stmtList;
+    List<Expr*> *exprList;
+    // -------------------------------
+    Program *program;
+    VarDecl *varDecl;
+    Type *type;
+    FnDecl *fnDecl;
+    List<VarDecl*> *varList;
+    ClassDecl *classDecl;
+    InterfaceDecl *interfDecl;
+    StmtBlock *stmtBlock;
+    Stmt *stmt;
+    IfStmt *ifStmt;
+    WhileStmt *whileStmt;
+    ForStmt *forStmt;
+    ReturnStmt *returnStmt;
+    BreakStmt *breakStmt;
+    PrintStmt *printStmt;
+    Expr *expr;
+    LValue *lValue;
+    Call *call;
+    NamedType *namedType;
 
-#line 140 "y.tab.h" /* yacc.c:1909  */
+#line 163 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
