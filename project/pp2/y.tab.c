@@ -1910,7 +1910,7 @@ yyreduce:
 
   case 32:
 #line 201 "parser.y" /* yacc.c:1646  */
-    {(yyval.namedTypeList) = new List <NamedType*>;}
+    {((yyval.namedTypeList) = new List <NamedType*>)->Append(new NamedType(new Identifier((yylsp[0]), (yyvsp[0].identifier))));}
 #line 1915 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1922,7 +1922,7 @@ yyreduce:
 
   case 34:
 #line 207 "parser.y" /* yacc.c:1646  */
-    {((yyval.declList) = (yyvsp[-1].declList))->Append((yyvsp[0].fnDecl));}
+    {(yyval.declList)->Append((yyvsp[0].fnDecl));}
 #line 1927 "y.tab.c" /* yacc.c:1646  */
     break;
 

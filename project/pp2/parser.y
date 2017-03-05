@@ -198,13 +198,13 @@ Field     :    VariableDecl {$$ = $1;}
           ;
 
 IdentList :    IdentList ',' T_Identifier  {($$ = $1)->Append(new NamedType(new Identifier(@3, $3)));}
-          |    T_Identifier                {$$ = new List <NamedType*>;}
+|    T_Identifier                {($$ = new List <NamedType*>)->Append(new NamedType(new Identifier(@1, $1)));}
           ;
 
 InterfaceDecl : T_Interface T_Identifier '{' PrototypeList '}'  {$$ = new InterfaceDecl(new Identifier(@2, $2), $4);}
               ;
 
-PrototypeList : PrototypeList Prototype    {($$ = $1)->Append($2);}
+PrototypeList : PrototypeList Prototype    {$$->Append($2);}
               |                            {$$ = new List<Decl*>;}
               ;
 
